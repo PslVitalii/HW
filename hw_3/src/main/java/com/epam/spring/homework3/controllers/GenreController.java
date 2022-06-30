@@ -1,6 +1,7 @@
-package com.epam.spring.homework3.service;
+package com.epam.spring.homework3.controllers;
 
 import com.epam.spring.homework3.model.dto.GenreDto;
+import com.epam.spring.homework3.service.GenreService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
