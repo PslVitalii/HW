@@ -1,5 +1,6 @@
 package com.epam.spring.homework3.controllers;
 
+import com.epam.spring.homework3.exceptions.EntityAlreadyExistsException;
 import com.epam.spring.homework3.exceptions.EntityNotFoundException;
 import com.epam.spring.homework3.model.errors.ApiError;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,11 @@ public class ErrorHandlerController {
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<ApiError> handleEntityNotFoundException(EntityNotFoundException e) {
         return buildResponseEntity(new ApiError(NOT_FOUND, e.getMessage(), e));
+    }
+
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    protected ResponseEntity<ApiError> handleEntityAlreadyExists(EntityAlreadyExistsException e) {
+        return buildResponseEntity(new ApiError(BAD_REQUEST, e.getMessage(), e));
     }
 
     private ResponseEntity<ApiError> buildResponseEntity(ApiError apiError) {
