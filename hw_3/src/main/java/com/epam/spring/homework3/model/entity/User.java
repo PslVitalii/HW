@@ -27,6 +27,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private boolean enable;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -8,6 +8,7 @@ import com.epam.spring.homework3.model.entity.User;
 import com.epam.spring.homework3.persistence.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 @AllArgsConstructor
 public class UserService {
+    private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
 
@@ -31,8 +33,10 @@ public class UserService {
         }
 
         User user = modelMapper.map(userDto, User.class);
-        System.out.println(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(Role.CLIENT);
+        user.setEnable(true);
+
         userRepository.save(user);
 
         return mapUserToUserDto(user);
