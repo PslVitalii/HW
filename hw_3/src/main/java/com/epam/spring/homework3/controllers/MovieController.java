@@ -58,5 +58,15 @@ public class MovieController {
 
         return movieService.getAllMovies();
     }
+
+    @PutMapping("/{movieId}/genres/{genreId}")
+    public void addGenreToMovie(@PathVariable(name = "movieId") long movieId, @PathVariable(name = "genreId") long genreId) {
+        movieService.addGenreToMovie(movieId, genreId);
+    }
+
+    @DeleteMapping("/{movieId}/genres/{genreId}")
+    public void removeGenreFromMovie(@PathVariable(name = "movieId") long movieId, @PathVariable(name = "genreId") long genreId) {
+        movieService.removeGenreFromMovie(movieId, genreId);
+    }
 }
 

@@ -2,7 +2,9 @@ package com.epam.spring.homework3.service;
 
 import com.epam.spring.homework3.exceptions.EntityNotFoundException;
 import com.epam.spring.homework3.model.dto.MovieDto;
+import com.epam.spring.homework3.model.entity.Genre;
 import com.epam.spring.homework3.model.entity.Movie;
+import com.epam.spring.homework3.persistence.GenreRepository;
 import com.epam.spring.homework3.persistence.MovieRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class MovieService {
     public final ModelMapper modelMapper;
     public final MovieRepository movieRepository;
+    public final GenreRepository genreRepository;
 
     public MovieDto saveMovie(MovieDto movieDto){
         Movie movie = modelMapper.map(movieDto, Movie.class);
@@ -59,6 +62,20 @@ public class MovieService {
         return movieRepository.findAll()
                 .stream().map(this::mapMovieToMovieDto)
                 .collect(Collectors.toList());
+    }
+
+    public void addGenreToMovie(long movieId, long genreId){
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId, Movie.class));
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException(genreId, Genre.class));
+
+        movie.getGenres().add(genre);
+    }
+
+    public void removeGenreFromMovie(long movieId, long genreId){
+        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId, Movie.class));
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException(genreId, Genre.class));
+
+        movie.getGenres().remove(genre);
     }
 
     public MovieDto mapMovieToMovieDto(Movie movie){
