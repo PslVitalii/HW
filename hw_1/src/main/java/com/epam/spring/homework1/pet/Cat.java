@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(Ordered.LOWEST_PRECEDENCE)
-public class Cat implements Animal{
+public class Cat implements Animal {
 
     @Override
     public String toString() {

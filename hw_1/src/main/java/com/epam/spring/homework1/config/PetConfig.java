@@ -15,13 +15,13 @@ public class PetConfig {
 
     @Bean
     @Primary
-    public Animal cheetahA(){
+    public Animal cheetahA() {
         return new Cheetah("Primary");
     }
 
     @Bean
     @Qualifier("cheetahB")
-    public Animal cheetahB(){
+    public Animal cheetahB() {
         return new Cheetah("Qualifier");
     }
 }

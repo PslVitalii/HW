@@ -8,11 +8,11 @@ import java.util.List;
 public class Pet {
     private final List<Animal> animals;
 
-    public Pet(List<Animal> animals){
+    public Pet(List<Animal> animals) {
         this.animals = animals;
     }
 
-    public void printPets(){
+    public void printPets() {
         System.out.println(animals);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(2)
-public class Spider implements Animal{
+public class Spider implements Animal {
 
     @Override
     public String toString() {

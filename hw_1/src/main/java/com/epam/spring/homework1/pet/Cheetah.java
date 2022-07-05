@@ -5,14 +5,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(1)
-public class Cheetah implements Animal{
-    private String type;
+public class Cheetah implements Animal {
+    private final String type;
 
-    public Cheetah(){
+    public Cheetah() {
         this.type = "@Component";
     }
 
-    public Cheetah(String type){
+    public Cheetah(String type) {
         this.type = type;
     }
 
