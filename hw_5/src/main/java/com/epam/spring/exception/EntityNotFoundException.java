@@ -1,0 +1,15 @@
+package com.epam.spring.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class EntityNotFoundException extends RuntimeException{
+    public EntityNotFoundException(Long id, Class<?> type){
+        super(type.getSimpleName() + " with id: " + id + " not found");
+    }
+
+    public EntityNotFoundException(String identifier, Class<?> type){
+        super(type.getSimpleName() + " with identifier: " + identifier + " not found");
+    }
+}
