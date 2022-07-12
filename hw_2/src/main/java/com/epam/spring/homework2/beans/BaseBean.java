@@ -1,41 +1,62 @@
 package com.epam.spring.homework2.beans;
 
 import com.epam.spring.homework2.validation.Validator;
+import org.springframework.beans.factory.BeanNameAware;
 
-public abstract class BaseBean implements Validator {
-    private String name;
-    private int value;
+public abstract class BaseBean implements Validator, BeanNameAware {
+	private String name;
+	private int value;
 
-    public BaseBean(){}
+	private String beanName;
 
-    public BaseBean(String name, int value){
-        this.name = name;
-        this.value = value;
-    }
+	public BaseBean() {
+	}
 
-    @Override
-    public boolean validate(){
-        return this.name != null && this.value >= 0;
-    }
+	public BaseBean(String name, int value) {
+		this.name = name;
+		this.value = value;
+	}
 
-    public String getName() {
-        return name;
-    }
+	@Override
+	public boolean validate() {
+		return this.name != null && this.value >= 0;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getValue() {
-        return value;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setValue(int value) {
-        this.value = value;
-    }
+	public int getValue() {
+		return value;
+	}
 
-    @Override
-    public String toString() {
-        return String.format("{name : %s, value : %d}", name, value);
-    }
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	public String getBeanName() {
+		return beanName;
+	}
+
+	protected void init() {
+		System.out.println(beanName + " custom init method");
+	}
+
+	protected void destroy() {
+		System.out.println(beanName + " custom destroy method");
+	}
+
+	@Override
+	public void setBeanName(String beanName) {
+		this.beanName = beanName;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("%s{name : %s, value : %d}", beanName, name, value);
+	}
 }
