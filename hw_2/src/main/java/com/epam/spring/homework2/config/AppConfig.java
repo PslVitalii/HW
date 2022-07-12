@@ -9,7 +9,7 @@ import org.springframework.context.annotation.*;
 public class AppConfig {
 
 	@Bean
-	public BeansValidator beanValidator(){
+	public BeansValidator beanValidator() {
 		return new BeansValidator();
 	}
 }

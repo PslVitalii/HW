@@ -7,21 +7,21 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.util.Arrays;
 
 public class Main {
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+	public static void main(String[] args) {
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        System.out.println("\nTask related beans");
-        Arrays.stream(context.getBeanDefinitionNames())
-                .map(context::getBean)
-                .filter(bean -> bean instanceof BaseBean)
-                .forEach(System.out::println);
+		System.out.println("\nTask related beans");
+		Arrays.stream(context.getBeanDefinitionNames())
+				.map(context::getBean)
+				.filter(BaseBean.class::isInstance)
+				.forEach(System.out::println);
 
-        System.out.println("\nBeans configurations");
-        Arrays.stream(context.getBeanDefinitionNames())
-                .map(context::getBeanDefinition)
-                .forEach(System.out::println);
+		System.out.println("\nBeans configurations");
+		Arrays.stream(context.getBeanDefinitionNames())
+				.map(context::getBeanDefinition)
+				.forEach(System.out::println);
 
-        System.out.println("\nClosing context");
-        context.close();
-    }
+		System.out.println("\nClosing context");
+		context.close();
+	}
 }

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
-        for(String beanDefinitionName: factory.getBeanDefinitionNames()){
-            if (factory.getType(beanDefinitionName) == BeanB.class){
-                BeanDefinition beanBDefinition = factory.getBeanDefinition(beanDefinitionName);
-                beanBDefinition.setInitMethodName("otherInit");
-            }
-        }
-    }
+	@Override
+	public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException {
+		for (String beanDefinitionName : factory.getBeanDefinitionNames()) {
+			if (factory.getType(beanDefinitionName) == BeanB.class) {
+				BeanDefinition beanBDefinition = factory.getBeanDefinition(beanDefinitionName);
+				beanBDefinition.setInitMethodName("otherInit");
+			}
+		}
+	}
 }
