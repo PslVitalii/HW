@@ -10,35 +10,36 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity @Table(name = "person")
+@Entity
+@Table(name = "person")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String firstName;
-    private String lastName;
+	private String firstName;
+	private String lastName;
 
-    @Column(unique = true)
-    private String email;
+	@Column(unique = true)
+	private String email;
 
-    private String password;
+	private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+	@Enumerated(EnumType.STRING)
+	private Role role;
 
-    private boolean enable;
+	private boolean enable;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(email, user.email) && role == user.role;
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		User user = (User) o;
+		return Objects.equals(email, user.email) && role == user.role;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(email, role);
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, role);
+	}
 }

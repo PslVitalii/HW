@@ -16,36 +16,36 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/genres")
 public class GenreController {
-    private final GenreService genreService;
+	private final GenreService genreService;
 
-    @Operation(description = "Save genre")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping
-    public GenreDto saveGenre(@Valid @RequestBody GenreDto genre){
-        return genreService.saveGenre(genre);
-    }
+	@Operation(description = "Save genre")
+	@ResponseStatus(HttpStatus.CREATED)
+	@PostMapping
+	public GenreDto saveGenre(@Valid @RequestBody GenreDto genre) {
+		return genreService.saveGenre(genre);
+	}
 
-    @Operation(description = "Delete genre")
-    @DeleteMapping("{id}")
-    public void deleteGenre(@PathVariable long id){
-        genreService.deleteGenre(id);
-    }
+	@Operation(description = "Delete genre")
+	@DeleteMapping("{id}")
+	public void deleteGenre(@PathVariable long id) {
+		genreService.deleteGenre(id);
+	}
 
-    @Operation(description = "Update genre")
-    @PutMapping("{id}")
-    public void updateGenre(@PathVariable long id, @Valid @RequestBody GenreDto genre){
-        genreService.updateGenre(id, genre);
-    }
+	@Operation(description = "Update genre")
+	@PutMapping("{id}")
+	public void updateGenre(@PathVariable long id, @Valid @RequestBody GenreDto genre) {
+		genreService.updateGenre(id, genre);
+	}
 
-    @Operation(description = "Get all available genres")
-    @GetMapping
-    public List<GenreDto> getAllGenres(){
-        return genreService.getAllGenres();
-    }
+	@Operation(description = "Get all available genres")
+	@GetMapping
+	public List<GenreDto> getAllGenres() {
+		return genreService.getAllGenres();
+	}
 
-    @Operation(description = "Get genre by its id")
-    @GetMapping("/{id}")
-    public GenreDto getGenre(@PathVariable long id){
-        return genreService.getGenre(id);
-    }
+	@Operation(description = "Get genre by its id")
+	@GetMapping("/{id}")
+	public GenreDto getGenre(@PathVariable long id) {
+		return genreService.getGenre(id);
+	}
 }

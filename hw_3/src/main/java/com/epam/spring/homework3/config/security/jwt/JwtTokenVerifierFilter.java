@@ -20,28 +20,28 @@ import java.util.Map;
 
 @Component
 public class JwtTokenVerifierFilter extends OncePerRequestFilter {
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+		String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-        if (authorization == null || authorization.isBlank() || !authorization.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+		if (authorization == null || authorization.isBlank() || !authorization.startsWith("Bearer ")) {
+			filterChain.doFilter(request, response);
+			return;
+		}
 
-        String token = authorization.replace("Bearer ", "");
-        try {
-            Authentication authentication = JwtUtils.tokenToAuthenticationMapper(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
-        } catch (JwtException e) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+		String token = authorization.replace("Bearer ", "");
+		try {
+			Authentication authentication = JwtUtils.tokenToAuthenticationMapper(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			filterChain.doFilter(request, response);
+		} catch (JwtException e) {
+			response.setStatus(HttpStatus.FORBIDDEN.value());
+			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-            PrintWriter out = response.getWriter();
-            String jsonResponse = new ObjectMapper().writeValueAsString(Map.of("message", "JWT token cannot be trusted", "token", token));
-            out.print(jsonResponse);
-            out.flush();
-        }
-    }
+			PrintWriter out = response.getWriter();
+			String jsonResponse = new ObjectMapper().writeValueAsString(Map.of("message", "JWT token cannot be trusted", "token", token));
+			out.print(jsonResponse);
+			out.flush();
+		}
+	}
 }

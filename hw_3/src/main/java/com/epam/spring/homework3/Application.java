@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class Application {
-    @Value("${message}")
-    String message;
+	@Value("${message}")
+	String message;
 
-    public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 
-    @GetMapping
-    public String configurationTest(){
-        return message;
-    }
+	@GetMapping
+	public String configurationTest() {
+		return message;
+	}
 }

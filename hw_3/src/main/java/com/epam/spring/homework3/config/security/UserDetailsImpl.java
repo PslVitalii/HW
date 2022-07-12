@@ -9,50 +9,50 @@ import java.util.Collection;
 import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
-    private final String email;
-    private final String password;
-    private final boolean enabled;
-    private final List<GrantedAuthority> grantedAuthorities;
+	private final String email;
+	private final String password;
+	private final boolean enabled;
+	private final List<GrantedAuthority> grantedAuthorities;
 
-    public UserDetailsImpl(User user){
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-        this.enabled = user.isEnable();
-        this.grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().toString()));
-    }
+	public UserDetailsImpl(User user) {
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.enabled = user.isEnable();
+		this.grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().toString()));
+	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return grantedAuthorities;
-    }
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return grantedAuthorities;
+	}
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	@Override
+	public String getPassword() {
+		return password;
+	}
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
+	@Override
+	public String getUsername() {
+		return email;
+	}
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
 }

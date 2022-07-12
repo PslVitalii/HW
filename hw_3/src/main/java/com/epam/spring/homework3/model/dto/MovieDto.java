@@ -2,6 +2,7 @@ package com.epam.spring.homework3.model.dto;
 
 import com.epam.spring.homework3.model.entity.Genre;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,27 +19,29 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieDto {
-    private Long id;
 
-    @NotBlank(message = "Movie name is required")
-    private String name;
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Long id;
 
-    @Size(min = 24, max = 1024, message = "You need to provide a short overview of this movie")
-    private String overview;
+	@NotBlank(message = "Movie name is required")
+	private String name;
 
-    @Min(value = 1, message = "Movie duration cannot be shorter that 1 minute")
-    private Long duration;
+	@Size(min = 24, max = 1024, message = "You need to provide a short overview of this movie")
+	private String overview;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate releaseDate;
+	@Min(value = 1, message = "Movie duration cannot be shorter that 1 minute")
+	private Long duration;
 
-    private String posterImage;
-    private Set<String> previewImages;
-    private String trailerUrl;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	private LocalDate releaseDate;
 
-    @JsonIgnoreProperties("movies")
-    private Set<Genre> genres = new HashSet<>();
+	private String posterImage;
+	private Set<String> previewImages;
+	private String trailerUrl;
 
-    private Set<String> directors = new HashSet<>();
-    private Set<String> actors = new HashSet<>();
+	@JsonIgnoreProperties("movies")
+	private Set<Genre> genres = new HashSet<>();
+
+	private Set<String> directors = new HashSet<>();
+	private Set<String> actors = new HashSet<>();
 }
