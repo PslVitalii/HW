@@ -1,6 +1,7 @@
 package com.epam.spring.homework3.model.dto;
 
 import com.epam.spring.homework3.model.entity.Genre;
+import com.epam.spring.homework3.validation.annotations.YoutubeVideoUrlValidation;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -35,9 +36,11 @@ public class MovieDto {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate releaseDate;
 
+	@YoutubeVideoUrlValidation
+	private String trailerUrl;
+
 	private String posterImage;
 	private Set<String> previewImages;
-	private String trailerUrl;
 
 	@JsonIgnoreProperties("movies")
 	private Set<Genre> genres = new HashSet<>();
