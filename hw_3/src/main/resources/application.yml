@@ -5,3 +5,13 @@ logging:
   level:
     root: INFO
     com.epam: DEBUG
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  info:
+    java:
+      enabled: true
+    env:
+      enabled: true
