@@ -1,5 +1,3 @@
-message: Hell Yeah!
-
 spring:
   datasource:
     url: jdbc:h2:mem:cinema;
