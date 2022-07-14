@@ -20,8 +20,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovieDto {
-
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
 
 	@NotBlank(message = "{movie.name.not-blank}")
