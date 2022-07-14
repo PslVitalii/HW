@@ -19,7 +19,7 @@ public class GenreDto {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
 
-	@NotBlank
+	@NotBlank(message = "{genre.not-empty}")
 	private String genre;
 
 	@JsonIgnoreProperties("genres")

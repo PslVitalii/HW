@@ -8,10 +8,10 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class AuthenticationRequestDto {
 
-	@Email
-	@NotBlank
+	@Email(message = "{email.valid-format}")
+	@NotBlank(message = "{email.not-empty}")
 	private String email;
 
-	@NotBlank
+	@NotBlank(message = "{password.not-empty}")
 	private String password;
 }

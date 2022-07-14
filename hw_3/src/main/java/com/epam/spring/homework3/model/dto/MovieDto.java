@@ -24,25 +24,25 @@ public class MovieDto {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private Long id;
 
-	@NotBlank(message = "Movie name is required")
+	@NotBlank(message = "{movie.name.not-blank}")
 	private String name;
 
-	@Size(min = 24, max = 1024, message = "You need to provide a short overview of this movie")
+	@Size(min = 24, max = 1024, message = "{movie.overview.not-empty}")
 	private String overview;
 
-	@Min(value = 1, message = "Movie duration cannot be shorter that 1 minute")
+	@Min(value = 1, message = "{movie.duration}")
 	private Long duration;
 
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate releaseDate;
 
-	@YoutubeVideoUrlValidation
+	@YoutubeVideoUrlValidation(message = "{movie.trailer-url}")
 	private String trailerUrl;
 
 	private String posterImage;
 	private Set<String> previewImages;
 
-	@JsonIgnoreProperties("movies")
+	@JsonIgnoreProperties("{movies}")
 	private Set<Genre> genres = new HashSet<>();
 
 	private Set<String> directors = new HashSet<>();

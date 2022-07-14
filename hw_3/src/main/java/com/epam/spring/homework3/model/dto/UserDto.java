@@ -19,12 +19,13 @@ public class UserDto {
 	private String firstName;
 	private String lastName;
 
-	@Email
-	@NotBlank
+	@Email(message = "{email.valid-format}")
+	@NotBlank(message = "{email.not-empty}")
 	private String email;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Size(min = 6)
+	@NotBlank(message = "{password.not-empty}")
+	@Size(min = 6, message = "{password.min-length}")
 	private String password;
 
 	private boolean enabled;
