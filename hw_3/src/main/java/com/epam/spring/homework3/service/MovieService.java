@@ -20,75 +20,92 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class MovieService {
-	public final ModelMapper modelMapper;
-	public final MovieRepository movieRepository;
-	public final GenreRepository genreRepository;
+    public final ModelMapper modelMapper;
+    public final MovieRepository movieRepository;
+    public final GenreRepository genreRepository;
 
-	public MovieDto saveMovie(MovieDto movieDto) {
-		log.debug("save movie {}", movieDto);
-		Movie movie = modelMapper.map(movieDto, Movie.class);
-		movieRepository.save(movie);
+    public MovieDto saveMovie(MovieDto movieDto) {
+        log.debug("save movie {}", movieDto);
 
-		return mapMovieToMovieDto(movie);
-	}
+        Movie movie = modelMapper.map(movieDto, Movie.class);
+        movieRepository.save(movie);
 
-	public void deleteMovie(long id) {
-		log.debug("delete movie by id: {}", id);
-		Movie movie = movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Movie.class));
-		movieRepository.delete(movie);
-	}
+        return mapMovieToMovieDto(movie);
+    }
 
-	public void updateMovie(long id, MovieDto movieDto) {
-		log.debug("update movie with id {}: {}", id, movieDto);
-		movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Movie.class));
+    public void deleteMovie(long id) {
+        log.debug("delete movie by id: {}", id);
 
-		Movie movie = modelMapper.map(movieDto, Movie.class);
-		movie.setId(id);
+        Movie movie = getMovieById(id);
+        movieRepository.delete(movie);
+    }
 
-		movieRepository.save(movie);
-	}
+    public void updateMovie(long id, MovieDto movieDto) {
+        log.debug("update movie with id {}: {}", id, movieDto);
 
-	@Transactional(readOnly = true)
-	public MovieDto getMovie(long id) {
-		log.debug("get movie by id: {}", id);
-		return movieRepository.findById(id)
-				.map(this::mapMovieToMovieDto)
-				.orElseThrow(() -> new EntityNotFoundException(id, Movie.class));
-	}
+        // check if movie exists. If it doesn't, then method will throw EntityNotFoundException
+        getMovieById(id);
 
-	@Transactional(readOnly = true)
-	public List<MovieDto> getMoviesByName(String name) {
-		log.debug("get movie by name: {}", name);
-		return movieRepository.findByNameContainingIgnoreCase(name)
-				.stream().map(this::mapMovieToMovieDto)
-				.collect(Collectors.toList());
-	}
+        Movie movie = modelMapper.map(movieDto, Movie.class);
+        movie.setId(id);
 
-	@Transactional(readOnly = true)
-	public List<MovieDto> getAllMovies() {
-		log.info("get all movies");
-		return movieRepository.findAll()
-				.stream().map(this::mapMovieToMovieDto)
-				.collect(Collectors.toList());
-	}
+        movieRepository.save(movie);
+    }
 
-	public void addGenreToMovie(long movieId, long genreId) {
-		log.debug("add genre {} to movie {}", movieId, genreId);
-		Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId, Movie.class));
-		Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException(genreId, Genre.class));
+    @Transactional(readOnly = true)
+    public MovieDto getMovie(long id) {
+        log.debug("get movie by id: {}", id);
 
-		movie.getGenres().add(genre);
-	}
+        Movie movie = getMovieById(id);
 
-	public void removeGenreFromMovie(long movieId, long genreId) {
-		log.debug("remove genre {} from movie {}", movieId, genreId);
-		Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new EntityNotFoundException(movieId, Movie.class));
-		Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new EntityNotFoundException(genreId, Genre.class));
+        return mapMovieToMovieDto(movie);
+    }
 
-		movie.getGenres().remove(genre);
-	}
+    @Transactional(readOnly = true)
+    public List<MovieDto> getMoviesByName(String name) {
+        log.debug("get movie by name: {}", name);
 
-	public MovieDto mapMovieToMovieDto(Movie movie) {
-		return modelMapper.map(movie, MovieDto.class);
-	}
+        return movieRepository.findByNameContainingIgnoreCase(name)
+                .stream().map(this::mapMovieToMovieDto)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MovieDto> getAllMovies() {
+        log.info("get all movies");
+
+        return movieRepository.findAll()
+                .stream().map(this::mapMovieToMovieDto)
+                .collect(Collectors.toList());
+    }
+
+    public void addGenreToMovie(long movieId, long genreId) {
+        log.debug("add genre {} to movie {}", movieId, genreId);
+
+        Movie movie = getMovieById(movieId);
+        Genre genre = getGenreById(genreId);
+
+        movie.getGenres().add(genre);
+    }
+
+    public void removeGenreFromMovie(long movieId, long genreId) {
+        log.debug("remove genre {} from movie {}", movieId, genreId);
+
+        Movie movie = getMovieById(movieId);
+        Genre genre = getGenreById(genreId);
+
+        movie.getGenres().remove(genre);
+    }
+
+    private Movie getMovieById(long id) {
+        return movieRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Movie.class));
+    }
+
+    private Genre getGenreById(long id) {
+        return genreRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id, Genre.class));
+    }
+
+    public MovieDto mapMovieToMovieDto(Movie movie) {
+        return modelMapper.map(movie, MovieDto.class);
+    }
 }
