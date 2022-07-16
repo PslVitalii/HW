@@ -9,19 +9,31 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class GenreDto {
 
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	private Long id;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long id;
 
-	@NotBlank(message = "{genre.not-empty}")
-	private String genre;
+    @NotBlank(message = "{genre.not-empty}")
+    private String genre;
 
-	@JsonIgnoreProperties("genres")
-	private Set<Movie> movies = new HashSet<>();
+    @JsonIgnoreProperties("genres")
+    private Set<Movie> movies = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GenreDto genreDto = (GenreDto) o;
+        return Objects.equals(genre, genreDto.genre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(genre);
+    }
 }

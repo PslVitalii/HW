@@ -14,35 +14,49 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class MovieDto {
-	private Long id;
 
-	@NotBlank(message = "{movie.name.not-blank}")
-	private String name;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Long id;
 
-	@Size(min = 24, max = 1024, message = "{movie.overview.not-empty}")
-	private String overview;
+    @NotBlank(message = "{movie.name.not-blank}")
+    private String name;
 
-	@Min(value = 1, message = "{movie.duration}")
-	private Long duration;
+    @Size(min = 24, max = 1024, message = "{movie.overview.not-empty}")
+    private String overview;
 
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private LocalDate releaseDate;
+    @Min(value = 1, message = "{movie.duration}")
+    private Long duration;
 
-	@YoutubeVideoUrlValidation(message = "{movie.trailer-url}")
-	private String trailerUrl;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate releaseDate;
 
-	private String posterImage;
-	private Set<String> previewImages;
+    @YoutubeVideoUrlValidation(message = "{movie.trailer-url}")
+    private String trailerUrl;
 
-	@JsonIgnoreProperties("{movies}")
-	private Set<Genre> genres = new HashSet<>();
+    private String posterImage;
+    private Set<String> previewImages;
 
-	private Set<String> directors = new HashSet<>();
-	private Set<String> actors = new HashSet<>();
+    @JsonIgnoreProperties("{movies}")
+    private Set<Genre> genres = new HashSet<>();
+
+    private Set<String> directors = new HashSet<>();
+    private Set<String> actors = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MovieDto movieDto = (MovieDto) o;
+        return Objects.equals(name, movieDto.name) && Objects.equals(duration, movieDto.duration) && Objects.equals(releaseDate, movieDto.releaseDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, duration, releaseDate);
+    }
 }
