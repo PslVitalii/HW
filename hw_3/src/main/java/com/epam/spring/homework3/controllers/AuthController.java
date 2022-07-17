@@ -30,7 +30,7 @@ public class AuthController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<UserDto> login(@RequestBody AuthenticationRequestDto request) {
+	public ResponseEntity<UserDto> login(@Valid @RequestBody AuthenticationRequestDto request) {
 		// Authenticate user. It will throw AuthenticationExc if credentials are invalid
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 		Authentication authentication = authenticationManager.authenticate(authenticationToken);
