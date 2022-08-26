@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 
-@PropertySource("classpath:security.properties")
 @SpringBootApplication
 @RestController
 public class Application {
 
-    @Value("${admin.email}")
+    @Value("${security.admin.email}")
     private String adminEmail;
 
-    @Value("${admin.password}")
+    @Value("${security.admin.password}")
     private String adminPassword;
 
     public static void main(String[] args) {
