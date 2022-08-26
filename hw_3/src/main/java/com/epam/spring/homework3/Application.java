@@ -3,6 +3,8 @@ package com.epam.spring.homework3;
 import com.epam.spring.homework3.model.entity.Role;
 import com.epam.spring.homework3.model.entity.User;
 import com.epam.spring.homework3.persistence.UserRepository;
+import com.epam.spring.homework3.utils.InitializationUtils;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -31,22 +33,7 @@ public class Application {
     @Bean
     protected CommandLineRunner commandLineRunner(PasswordEncoder passwordEncoder, UserRepository userRepository) {
         return args -> {
-            saveAdmin(passwordEncoder, userRepository);
+            InitializationUtils.saveAdmin(adminEmail, adminPassword, passwordEncoder, userRepository);
         };
-    }
-
-    private void saveAdmin(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        User admin = new User();
-        admin.setEmail(adminEmail);
-        admin.setRole(Role.ADMIN);
-        admin.setEnable(true);
-
-        String encodedPassword = passwordEncoder.encode(adminPassword);
-        admin.setPassword(encodedPassword);
-
-        Optional<User> possibleUser = userRepository.findByEmail(admin.getEmail());
-        if (possibleUser.isEmpty()) {
-            userRepository.save(admin);
-        }
     }
 }
