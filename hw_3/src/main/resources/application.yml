@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:cinema;
+logging:
+  level:
+    root: INFO
+    com.epam: DEBUG
+security:
+  jwt:
+    secret: ${JWT_SECRET:super.secret.jwt.key.super.secret.jwt.key}
+    token_validity_in_days: ${JWT_LIVE_TIME:7}
+  admin:
+    email: admin@mail.com
+    password: password
